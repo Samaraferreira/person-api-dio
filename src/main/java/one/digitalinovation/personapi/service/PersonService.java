@@ -1,5 +1,7 @@
 package one.digitalinovation.personapi.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
 import one.digitalinovation.personapi.dto.request.PersonDTO;
 import one.digitalinovation.personapi.dto.response.MessageResponseDTO;
 import one.digitalinovation.personapi.entity.Person;
@@ -27,5 +29,14 @@ public class PersonService {
                 .builder()
                 .message("Created person with ID " + savedPerson.getId())
                 .build();
+    }
+
+    public List<PersonDTO> listAll() {
+        List<Person> allPeople = personRepository.findAll();
+
+        return allPeople
+                .stream()
+                .map(personMapper::toDTO)
+                .collect(Collectors.toList());
     }
 }
